@@ -3,14 +3,8 @@
 An interactive Python Dash web application that enables market research analysts to extract contextual insights from earnings call transcripts with ease and precision.
 The system supports keyword-based, context-rich search over parsed transcripts, powered by a custom MongoDB backend and FMP APIs for financial data integration. It is tailored for competitive intelligence and investor relations workflows.
 
-Key Features:
-Automatic Synonym Expansion
-Text Cleaning & Segmentation
-Contextual Search Results
-Backend Storage
-
 🔍 Key Features:
-Automatic Synonym Expansion  – 
+🔍 Automatic Synonym Expansion  – 
 Each user keyword is matched against a curated synonym bank stored in MongoDB, enabling broader and more intelligent search coverage.
 🔍 Text Cleaning & Segmentation  – 
 Transcripts are preprocessed to distinguish between Prepared Remarks and Q&A sections, ensuring high relevance in search results.
