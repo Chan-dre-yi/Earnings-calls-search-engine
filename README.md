@@ -1,6 +1,6 @@
 # Earnings-calls-search-engine
 
-A Python Dash search engine for analysts to extract insights from earnings calls, with MongoDB-backed storage and FMP APIs; enabled keyword, context, and sort-based filters to streamline competitor analysis.
+A Python Dash search engine for helping market research analysts to extract insights from earnings calls, with MongoDB-backed storage and Finantial Modelling Prep APIs (earnings calls data source); enabled keyword, context, and sort-based filters to streamline competitor analysis.
 
 Here's a demo:
 
