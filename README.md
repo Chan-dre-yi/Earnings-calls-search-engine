@@ -26,13 +26,16 @@ Check out the live walkthrough of the application in action:
 
 https://github.com/user-attachments/assets/41426f46-2ccb-4ec9-b696-af5a844fcd29
 
+
 🔌 Data Source
 This project uses the Financial Modeling Prep API for accessing real-time and historical earnings call data:
 📡 https://site.financialmodelingprep.com/
 
+
 🖥️ Console View
 Here’s a glimpse of the backend console showing real-time parsing and search execution:
 ![image](https://github.com/user-attachments/assets/48049189-4e41-4cad-8a10-eabb59920341)
+
 
 🗃️ MongoDB Backend
 The system relies heavily on MongoDB for:
