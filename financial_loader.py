@@ -1,3 +1,5 @@
+### USED for fetching the data and inserting in the database
+
 from datetime import datetime, timedelta,date
 import time
 import os
