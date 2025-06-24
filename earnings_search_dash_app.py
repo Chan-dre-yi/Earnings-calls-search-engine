@@ -10,19 +10,38 @@ import dash
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
 from datetime import datetime
+from nltk.corpus import wordnet as wn
+import re
+import db_connection as mgDB
 
 # Inputs
 context_sizes = [1, 2, 3]
 default_context_size = 3
 default_keywords = 'intel or silicon photonics'
-MONGO_URI = ""
-# EarningsCallCollection = 'ChandreyiFMP_BatchEarningsCall'
-EarningsCallCollection = 'Financial_Batch_Earnings_Call'
+MONGO_URI = mgDB.MONGO_URI #db connection string site near INDIA
+MONGO_URI_US = mgDB.MONGO_URI_US #db connection string site near US
+
+EarningsCallCollection = '' #db collection name
 
 
 # Global variable for the database connection
-client = MongoClient(MONGO_URI)
-db = client.get_default_database()
+client = None
+db = None
+
+def connect_to_db(site):
+    global client, db
+    if site == 'INDIA':
+        client = MongoClient(MONGO_URI)
+    elif site == 'US':
+        client = MongoClient(MONGO_URI_US)
+    db = client.get_default_database()
+
+# Initialize the default connection
+connect_to_db('INDIA')
+
+db_india = MongoClient(MONGO_URI)['TDAP_DB']
+db_us = MongoClient(MONGO_URI_US)['TDAP_DB_US']
+db_list = [db_india, db_us]
 
 # Global variables to track the task state
 running = False
@@ -35,21 +54,136 @@ def check_cancel_for_FetchData():
     global running, c
     if not c=="cancelled" and not running: print("Cancel was pressed.", datetime.today().strftime("%H:%M:%S")); c = "cancelled"; return pd.DataFrame()
 
-def fetch_data(query):
+def fetch_data(query, db_list, keywords):
+    """
+    Fetch data from the database with synonym expansion for given keywords.
+    :param query: Original user query.
+    :param db_list: List of database connections.
+    :param keywords: List of keywords to include in the search.
+    :return: DataFrame containing fetched data.
+    """
     print("Fetching data from database...", datetime.today().strftime("%H:%M:%S"))
     check_cancel_for_FetchData()
-    earnings_call = get_db()[EarningsCallCollection]
+    earnings_call = db_list[0]['Financial_Batch_Earnings_Call']
     earnings_call.create_index([("doc_text", "text")])
     check_cancel_for_FetchData()
-    #search_query = ' '.join('\"{}\"'.format(word) for word in keywords)
-    search_query = query.replace(" and ", " ").replace(" or ", " | ")
+
+    # Generate the final query with synonyms based on the input query
+    final_query = construct_search_query(query, db_list)
+
+    # print(f"Search query: {final_query}")
     check_cancel_for_FetchData()
-    earnings_call_data = earnings_call.find({"$text": {"$search": search_query}})
+
+    # Perform the search with sorting and limiting results
+    earnings_call_data = earnings_call.find(
+        {"$text": {"$search": final_query}},
+        {"score": {"$meta": "textScore"}}  # Include relevance score in results
+    ).sort(
+        [("score", {"$meta": "textScore"}), ("doc_date", -1)]  # Sort by relevance and recency
+    ).limit(50)  # Limit to top 50 results
+
+    print({"$text": {"$search": final_query}})
     check_cancel_for_FetchData()
+
+    # Convert the result to a DataFrame
     df = pd.DataFrame(list(earnings_call_data))
+
     print("Data fetched successfully.", datetime.today().strftime("%H:%M:%S"))
-    # client.close()
     return df
+
+def construct_search_query(query, db_list):
+    """
+    Constructs the final search query by including synonyms for terms in the query.
+
+    :param query: Original user query.
+    :param db_list: List of database connections.
+    :return: String representing the search query.
+    """
+    syn_collection = db_list[0]['Synonyms_List']
+
+    # Handle AND and OR queries in the query variable
+    if " and " in query.lower():
+        # Replace "and" with space for AND query
+        search_query = ' '.join(f"\"{word.strip()}\"" for word in query.split(" and "))
+    elif " or " in query.lower():
+        # Replace "or" with "|" for OR query
+        search_query = ' | '.join(word.strip() for word in query.split(" or "))
+    else:
+        # Default to the original query
+        search_query = query
+
+    # Extract keywords from the search_query
+    keywords = [word.strip().strip('"') for word in search_query.split('|') if word.strip()]
+    synonym_mapping = get_or_generate_synonyms(keywords, syn_collection)
+
+    # Maintain the order of keywords and their synonyms
+    query_terms = []
+    for keyword in keywords:
+        all_terms = synonym_mapping.get(keyword, [keyword])
+        # Add each term as a quoted string to avoid splitting
+        query_terms.extend([f'{term}' for term in all_terms])
+    # print(query_terms)
+    # Join terms with '|' separator for the final query
+
+    return " | ".join(query_terms)
+
+def get_or_generate_synonyms(keywords, syn_list):
+    """
+    Fetch or generate synonyms for a list of keywords, handling compound terms like "Artificial Intelligence/AI".
+
+    :param keywords: List of keywords to process.
+    :param syn_list: MongoDB collection for storing/retrieving synonyms.
+    :return: Dictionary mapping keywords to their synonyms.
+    """
+    result = {}
+
+    for word in keywords:
+        # Perform a case-insensitive search in MongoDB collection
+        syn_data = syn_list.find_one({"Word": {"$regex": f"\\b{word}\\b", "$options": "i"}})
+
+        if syn_data:
+            # If found, retrieve synonyms
+            synonyms = syn_data['Synonyms'].split(", ")
+
+            # Handle compound terms in the "Word" field
+            compound_terms = syn_data['Word'].split('/')
+            if len(compound_terms) > 1:
+                # Add alternate terms from the compound word (excluding the original keyword)
+                alternate_term = next(
+                    (term.strip() for term in compound_terms if term.strip().lower() != word.lower()), None
+                )
+                if alternate_term:
+                    synonyms.insert(0, alternate_term)
+
+            print(f"Retrieved synonyms for '{word}' from MongoDB: {synonyms}")
+        else:
+            # If not found, generate synonyms using WordNet
+            synonyms = generate_synonyms_with_wordnet(word)
+            print(f"Generated synonyms for '{word}' using WordNet: {synonyms}")
+
+            # Insert the keyword and its synonyms into MongoDB
+            syn_list.insert_one({"Word": word, "Synonyms": ", ".join(synonyms)})
+            print(f"Inserted synonyms for '{word}' into MongoDB.")
+
+        # Include the keyword itself in the result
+        result[word] = [word] + synonyms
+
+    return result
+#generate synonyms for keywords not found in db
+def generate_synonyms_with_wordnet(word, num_synonyms=5):
+    """
+    Generate synonyms for a given word using WordNet.
+    """
+    synonyms = set()
+    for synset in wn.synsets(word):
+        for lemma in synset.lemmas():
+            synonyms.add(lemma.name().replace('_', ' '))
+            if len(synonyms) >= num_synonyms:
+                break
+        if len(synonyms) >= num_synonyms:
+            break
+    return list(synonyms)
+
 
 def clean_text(text):
     text = re.sub(r'<[^>]+>', '', text)  # Remove HTML tags
@@ -190,7 +324,30 @@ app = dash.Dash(__name__)
 
 # App layout
 app.layout = html.Div(style={'padding': '80px'}, children=[
-    html.H1("Earnings Calls Search Engine"),
+    html.H1(
+        "Earnings Calls Search Engine",
+        style={
+            'fontSize': '48px',
+            'textAlign': 'center',
+            'marginTop': '-40px'  # Moves the heading upwards
+        }
+    ),
+    html.Div(style={'display': 'flex', 'justifyContent': 'space-between', 'alignItems': 'center', 'paddingBottom': '20px'}, children=[
+        html.Div(),
+        html.Div(children=[
+            html.Label("DB Site:", style={'marginRight': '10px'}),
+            dcc.Dropdown(
+                id='db-site-dropdown',
+                options=[
+                    {'label': 'India', 'value': 'INDIA'},
+                    {'label': 'US', 'value': 'US'}
+                ],
+                value='INDIA',  # Default selection
+                clearable=False,
+                style={'width': '200px'}
+            )
+        ])
+    ]),
     html.Div(style={'padding': '40px', 'backgroundColor': '#f0f0f0', 'borderRadius': '30px'}, children=[
         html.Label("Search for:"),
         dcc.Input(
@@ -290,21 +447,30 @@ app.layout = html.Div(style={'padding': '80px'}, children=[
 ])
 
 @app.callback(
-    Output('results-output', 'children'),
-    Output('loading-output', 'children'),
-    Input('update-button', 'n_clicks'),
-    Input('cancel-button', 'n_clicks'),
-    State('keyword-input', 'value'),
-    State('context-size-dropdown', 'value'),
-    State('sort-dropdown', 'value')
+    [Output('results-output', 'children'),
+     Output('loading-output', 'children')],
+    [Input('update-button', 'n_clicks'),
+     Input('cancel-button', 'n_clicks'),
+     Input('db-site-dropdown', 'value')],  # Add site dropdown as an input
+    [State('keyword-input', 'value'),
+     State('context-size-dropdown', 'value'),
+     State('sort-dropdown', 'value')]
 )
 
-def update_output(go_clicks, cancel_clicks, keyword_input, selected_context_size, sort_by):
+def update_output(go_clicks, cancel_clicks, site, keyword_input, selected_context_size, sort_by):
     global running
-    if go_clicks > 0 and not running:
+    if running:
+        return [], "A task is already running. Please wait or cancel."
+
+    if go_clicks > 0:
         running = True
+        # Update the database connection
+        connect_to_db(site)
+
+        # Process keywords
         new_keywords = [kw.strip() for kw in keyword_input.replace('and', ',').replace('or', ',').split(',')]
-        df = fetch_data(keyword_input)
+        db_list = [db_india, db_us]  # Example: Ensure to initialize these earlier
+        df = fetch_data(keyword_input, db_list, new_keywords)
 
         if df.empty:
             running = False
@@ -313,7 +479,6 @@ def update_output(go_clicks, cancel_clicks, keyword_input, selected_context_size
         merged_df = pd.DataFrame()
         for keyword in new_keywords:
             check_cancel_for_UpdateOutput()
-            print(f"Finding relevant sentences around keyword: '{keyword}'...", datetime.today().strftime("%H:%M:%S"))
             result_df = keyword_matching_with_dataframe(df, keyword, selected_context_size)
             merged_df = pd.concat([merged_df, result_df], ignore_index=True)
 
@@ -323,7 +488,7 @@ def update_output(go_clicks, cancel_clicks, keyword_input, selected_context_size
             running = False
             return [], "No results found."
 
-        print("Sorting and formatting the results...", datetime.today().strftime("%H:%M:%S"))
+        # Sorting and formatting results
         if sort_by == 'keyword_count':
             merged_df = merged_df.sort_values(by='keyword_count', ascending=False)
         elif sort_by == 'recent_to_old':
@@ -331,8 +496,9 @@ def update_output(go_clicks, cancel_clicks, keyword_input, selected_context_size
         elif sort_by == 'company_name':
             merged_df = merged_df.sort_values(by='company_name')
 
+        # Format results for display
         newspaper_format = []
-        newspaper_format.append(html.H2("Earnings Calls Search Report", style={'fontSize': '38px', 'textAlign': 'center', 'marginBottom': '60px', 'color': '#333'}))
+        newspaper_format.append(html.H2("Earnings Calls Search Report", style={'fontSize': '48px', 'textAlign': 'center', 'marginBottom': '60px', 'color': '#333'}))
 
         for company in merged_df['company_name'].unique():
             company_data = merged_df[merged_df['company_name'] == company]
@@ -342,28 +508,24 @@ def update_output(go_clicks, cancel_clicks, keyword_input, selected_context_size
                 newspaper_format.append(html.H4(row['doc_date'], style={'fontSize': '18px', 'color': '#555'}))
                 # Prepared Remarks
                 prepared_text = row['prepared_remarks'] if pd.notna(row['prepared_remarks']) else ""
-                if prepared_text:  # Only show heading if there is content
-                    newspaper_format.append(html.H5("Prepared Remarks:", style={'fontSize': '14px', 'color': '#777', 'marginBottom': '0px'}))
-                    sentences = re.split(r'(?<=[.!?]) +', prepared_text)
-                    capitalized_sentences = [s.capitalize() for s in sentences]
-                    formatted_text = ' '.join(capitalized_sentences)
-                    newspaper_format.append(html.P(formatted_text, style={'fontSize': '16px', 'color': '#333', 'marginTop': '0px'}))
+                if prepared_text:
+                    newspaper_format.append(html.H5("Prepared Remarks:", style={'fontSize': '14px', 'color': '#777'}))
+                    newspaper_format.append(html.P(prepared_text, style={'fontSize': '16px', 'color': '#333'}))
                 # Q&A
                 qa_text = row['qa'] if pd.notna(row['qa']) else ""
-                if qa_text:  # Only show heading if there is content
-                    newspaper_format.append(html.H5("Q&A:", style={'fontSize': '14px', 'color': '#777', 'marginBottom': '0px'}))
-                    sentences = re.split(r'(?<=[.!?]) +', qa_text)
-                    capitalized_sentences = [s.capitalize() for s in sentences]
-                    formatted_text = ' '.join(capitalized_sentences)
-                    newspaper_format.append(html.P(formatted_text, style={'fontSize': '16px', 'color': '#333', 'marginTop': '0px'}))
+                if qa_text:
+                    newspaper_format.append(html.H5("Q&A:", style={'fontSize': '14px', 'color': '#777'}))
+                    newspaper_format.append(html.P(qa_text, style={'fontSize': '16px', 'color': '#333'}))
 
-        print("Report is ready!", datetime.today().strftime("%H:%M:%S"))
         running = False
         return newspaper_format, ""
 
-    if cancel_clicks > 0: 
+    if cancel_clicks > 0:
         running = False
-    return [], "Hit the 'Go' button to see the report."
+        return [], "Hit the 'Go' button to see the report."
+
+    return [], "No action yet."
+
 
 if __name__ == '__main__':
     app.run(debug=True)
