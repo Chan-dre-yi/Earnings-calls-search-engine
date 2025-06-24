@@ -11,20 +11,20 @@ The system supports keyword-based, context-rich search over parsed transcripts, 
 - 🔍 **Text Cleaning & Segmentation:**  
   Transcripts are preprocessed to distinguish between Prepared Remarks and Q&A sections, ensuring high relevance in search results.
 
-- 🎤 **Speaker Attribution:**  
+- 🔍 **Speaker Attribution:**  
   Each sentence is structured and tagged with the correct speaker name, enabling role-specific insights (e.g., CEO vs Analyst responses).
 
 - 🔍 **Contextual Search Results:**  
   Outputs are not just matches, but full-context segments that help users understand the meaning behind the mention.
 
-- 🗃️ **Backend Storage:**  
+- 🔍 **Backend Storage:**  
   All transcripts and metadata are stored and indexed within MongoDB for fast, flexible querying.
 
 ## 🛠 Built With
-- 🐍 **Python Dash** – for frontend interactivity
-- 🍃 **MongoDB** – for scalable, indexed storage and advanced querying
-- 📊 **FMP APIs** – for integrating financial metadata
-- 🧠 **NLP tools** – for text parsing, segmentation, and speaker tagging
+- 🛠 **Python Dash** – for frontend interactivity
+- 🛠 **MongoDB** – for scalable, indexed storage and advanced querying
+- 🛠 **FMP APIs** – for integrating financial metadata
+- 🛠 **NLP tools** – for text parsing, segmentation, and speaker tagging
 
 ## 📽️ Demo
 Check out the live walkthrough of the application in action:
@@ -33,18 +33,18 @@ https://github.com/user-attachments/assets/41426f46-2ccb-4ec9-b696-af5a844fcd29
 
 ## 🚀 Setup Instructions
 
-### 🛠️ 1. Clone the Repository
+### 1. Clone the Repository
 ```bash
 git clone <repository-url>
 cd <repository-folder>
 ```
 
-### 🌱 2. Create a Virtual Environment (Optional but Recommended)
+### 2. Create a Virtual Environment (Optional but Recommended)
 ```bash
 python -m venv venv
 ```
 
-#### 🔒 Activate the Virtual Environment
+#### Activate the Virtual Environment
 - **On Linux/Mac:**
     ```bash
     source venv/bin/activate
@@ -54,12 +54,12 @@ python -m venv venv
     venv\Scriptsctivate
     ```
 
-### 📦 3. Install Dependencies
+### 3. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### ▶️ 4. Run the Project
+###  4. Run the Project
 ```bash
 python <your_script_name>.py
 ```
