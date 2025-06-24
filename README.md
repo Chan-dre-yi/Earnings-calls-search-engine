@@ -27,7 +27,8 @@ The system supports keyword-based, context-rich search over parsed transcripts, 
 - 🧠 **NLP tools** – for text parsing, segmentation, and speaker tagging
 
 ## 📽️ Demo
-Check out the live walkthrough of the application in action:  
+Check out the live walkthrough of the application in action:
+
 https://github.com/user-attachments/assets/41426f46-2ccb-4ec9-b696-af5a844fcd29
 
 ## 🚀 Setup Instructions
