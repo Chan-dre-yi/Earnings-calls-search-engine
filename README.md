@@ -81,4 +81,4 @@ The system relies heavily on MongoDB for:
 ## 📌 Example Snapshots
 ![Example 1](https://github.com/user-attachments/assets/d287645b-02be-4ace-a46f-dc9b76c43db4)
 ![Example 2](https://github.com/user-attachments/assets/dce74e43-63e8-49b6-8ae1-2ef688f0c4aa)
-![Example 3](https://github.com/user-attachments/assets/5b73d1d4-d758-481c-ad6e81a9aa04)
+![Example 3](https://github.com/user-attachments/assets/5b73d1d4-d758-481c-ad6a-ed6e81a9aa04)
