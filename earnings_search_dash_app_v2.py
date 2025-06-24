@@ -18,10 +18,10 @@ import db_connection as mgDB
 context_sizes = [1, 2, 3]
 default_context_size = 3
 default_keywords = 'intel or silicon photonics'
-MONGO_URI = mgDB.MONGO_URI
-MONGO_URI_US = mgDB.MONGO_URI_US
+MONGO_URI = mgDB.MONGO_URI #db connection string site near INDIA
+MONGO_URI_US = mgDB.MONGO_URI_US #db connection string site near US
 
-EarningsCallCollection = 'Financial_Batch_Earnings_Call'
+EarningsCallCollection = '' #db collection name
 
 
 # Global variable for the database connection
@@ -169,7 +169,7 @@ def get_or_generate_synonyms(keywords, syn_list):
         result[word] = [word] + synonyms
 
     return result
-
+#generate synonyms for keywords not found in db
 def generate_synonyms_with_wordnet(word, num_synonyms=5):
     """
     Generate synonyms for a given word using WordNet.
