@@ -25,21 +25,21 @@ Check out the live walkthrough of the application in action:
 
 https://github.com/user-attachments/assets/41426f46-2ccb-4ec9-b696-af5a844fcd29
 
-🚀 Setup Instructions
-  🛠️ 1. Clone the Repository
-        git clone <repository-url>
-        cd <repository-folder>
-  🌱 2. Create a Virtual Environment (Optional)
-          python -m venv venv
-          🔒 Activate the Virtual Environment:
-              On Linux/Mac:
-              source venv/bin/activate
-              On Windows:
-              venv\Scripts\activate
-    📦 3. Install Dependencies
-          pip install -r requirements.txt
-    ▶️ 4. Run the Project
-          python <your_script_name>.py
+🚀 Setup Instructions  
+  🛠️ 1. Clone the Repository  
+        git clone <repository-url>  
+        cd <repository-folder>  
+  🌱 2. Create a Virtual Environment (Optional)  
+          python -m venv venv  
+          🔒 Activate the Virtual Environment:  
+              On Linux/Mac:  
+              source venv/bin/activate  
+              On Windows:  
+              venv\Scripts\activate  
+    📦 3. Install Dependencies  
+          pip install -r requirements.txt  
+    ▶️ 4. Run the Project  
+          python <your_script_name>.py  
 
 🔌 Data Source
 This project uses the Financial Modeling Prep API for accessing real-time and historical earnings call data:
