@@ -59,7 +59,7 @@ https://github.com/user-attachments/assets/41426f46-2ccb-4ec9-b696-af5a844fcd29
 > MONGODB_URI = "your_mongodb_connection_string"
 > ```  
 > **5. Get Your API Key**  
-> Visit [Financial Modeling Prep](https://site.financialmodelingprep.com/developer/docs/) and obtain an API key.  
+> Visit [Financial Modeling Prep](https://site.financialmodelingprep.com/) and obtain an API key.  
 > Add your key to the relevant part of the  `test_db_script.py` script.
 > ```python
 > api_key = '' #your api key
@@ -90,7 +90,7 @@ https://github.com/user-attachments/assets/41426f46-2ccb-4ec9-b696-af5a844fcd29
 
 ### 🔌 Data Source
 This project uses the Financial Modeling Prep API for accessing real-time and historical earnings call data:  
-https://site.financialmodelingprep.com/
+[Financial Modeling Prep](https://site.financialmodelingprep.com/developer/docs/)
 
 &nbsp;
 
