@@ -52,10 +52,16 @@ https://github.com/user-attachments/assets/41426f46-2ccb-4ec9-b696-af5a844fcd29
 > ```bash
 > pip install -r requirements.txt
 > ```  
-> **4. Run the Project**  
+> **4. Configure the Database URI**  
+> Open `db_connection.py` and add your actual connection string.
+> ```python
+> MONGODB_URI = "your_mongodb_connection_string"
+> ```  
+> **5. Run the Project**  
 > ```bash
 > python <your_script_name>.py
 > ```
+
 
 &nbsp;
 
