@@ -53,14 +53,14 @@ https://github.com/user-attachments/assets/41426f46-2ccb-4ec9-b696-af5a844fcd29
 > pip install -r requirements.txt
 > ```  
 > **4. Configure the Database URI**
-> Host a MongoDB instance (locally or via MongoDB Atlas).  
-> Open `db_connection.py` and add your actual connection string.
+> - Host a MongoDB instance (locally or via MongoDB Atlas).  
+> - Open `db_connection.py` and add your actual connection string.
 > ```python
 > MONGODB_URI = "your_mongodb_connection_string"
 > ```  
 > **5. Get Your API Key**  
-> Visit [Financial Modeling Prep](https://site.financialmodelingprep.com/) and obtain an API key.  
-> Add your key to the relevant part of the  `test_db_script.py` script.
+> - Visit [Financial Modeling Prep](https://site.financialmodelingprep.com/) and obtain an API key.  
+> - Add your key to the relevant part of the  `test_db_script.py` script.
 > ```python
 > api_key = '' #your api key
 > ```
@@ -71,7 +71,7 @@ https://github.com/user-attachments/assets/41426f46-2ccb-4ec9-b696-af5a844fcd29
 > os.environ["HTTPS_PROXY"] = "http://your_proxy:port"
 > ```
 > **7. Prepare the Database**  
-> Run the 4 scripts inside the `DatabaseScripts/` folder (modify the collection names as required)  
+> Run the 4 scripts inside the `DatabaseScripts/` folder (modify the collection names if/ as required)  
 > ```bash
 > cd DatabaseScripts
 > python test_db_script.py
