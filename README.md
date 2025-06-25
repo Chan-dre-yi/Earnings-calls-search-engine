@@ -7,20 +7,11 @@ The system supports keyword-based, context-rich search over parsed transcripts, 
 &nbsp;
 
 ### 🔍 Key Features
-- 🔍 **Automatic Synonym Expansion:**  
-  Each user keyword is matched against a curated synonym bank stored in MongoDB, enabling broader and more intelligent search coverage.
-
-- 🔍 **Text Cleaning & Segmentation:**  
-  Transcripts are preprocessed to distinguish between Prepared Remarks and Q&A sections, ensuring high relevance in search results.
-
-- 🔍 **Speaker Attribution:**  
-  Each sentence is structured and tagged with the correct speaker name, enabling role-specific insights (e.g., CEO vs Analyst responses).
-
-- 🔍 **Contextual Search Results:**  
-  Outputs are not just matches, but full-context segments that help users understand the meaning behind the mention.
-
-- 🔍 **Backend Storage:**  
-  All transcripts and metadata are stored and indexed within MongoDB for fast, flexible querying.
+- 🔍 **Automatic Synonym Expansion** – Each keyword is matched against a curated synonym bank, enabling more intelligent search coverage.
+- 🔍 **Text Cleaning & Segmentation** – Transcripts are preprocessed to distinguish between Prepared Remarks and Q&A sections, ensuring high relevance in search results.
+- 🔍 **Speaker Attribution** – Each sentence is structured and tagged with the correct speaker name, enabling role-specific insights (e.g., CEO vs Analyst responses).
+- 🔍 **Contextual Search Results** – Outputs are not just matches, but full-context segments that help users understand the meaning behind the mention.
+- 🔍 **Backend Storage** – All transcripts and metadata are stored and indexed within MongoDB for fast, flexible querying.
 
 &nbsp;
 
