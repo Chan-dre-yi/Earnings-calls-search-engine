@@ -4,6 +4,8 @@
 An interactive Python Dash web application that enables market research analysts to extract contextual insights from earnings call transcripts with ease and precision.
 The system supports keyword-based, context-rich search over parsed transcripts, powered by a custom MongoDB backend and FMP APIs for financial data integration. It is tailored for competitive intelligence and investor relations workflows.
 
+&nbsp;
+
 ### 🔍 Key Features
 - 🔍 **Automatic Synonym Expansion:**  
   Each user keyword is matched against a curated synonym bank stored in MongoDB, enabling broader and more intelligent search coverage.
@@ -20,16 +22,22 @@ The system supports keyword-based, context-rich search over parsed transcripts, 
 - 🔍 **Backend Storage:**  
   All transcripts and metadata are stored and indexed within MongoDB for fast, flexible querying.
 
+&nbsp;
+
 ### 🛠 Built With
 - 🛠 **Python Dash** – for frontend interactivity
 - 🛠 **MongoDB** – for scalable, indexed storage and advanced querying
 - 🛠 **FMP APIs** – for integrating financial metadata
 - 🛠 **NLP tools** – for text parsing, segmentation, and speaker tagging
 
+&nbsp;
+
 ### 📽️ Demo
 Check out the live walkthrough of the application in action:
 
 https://github.com/user-attachments/assets/41426f46-2ccb-4ec9-b696-af5a844fcd29
+
+&nbsp;
 
 ### 🚀 Setup Instructions
 
@@ -64,13 +72,19 @@ pip install -r requirements.txt
 python <your_script_name>.py
 ```
 
+&nbsp;
+
 ### 🔌 Data Source
 This project uses the Financial Modeling Prep API for accessing real-time and historical earnings call data:  
 https://site.financialmodelingprep.com/
 
+&nbsp;
+
 ### 🖥️ Console View
 Here’s a glimpse of the backend console showing real-time parsing and search execution:  
 ![Console View](https://github.com/user-attachments/assets/48049189-4e41-4cad-8a10-eabb59920341)
+
+&nbsp;
 
 ### 🗃️ MongoDB Backend
 The system relies heavily on MongoDB for:
@@ -78,6 +92,8 @@ The system relies heavily on MongoDB for:
 - 🗃️ Segmenting text into Prepared Remarks and Q&A
 - 🗃️ Expanding search queries using a synonym bank
 - 🗃️ Tagging sentences with correct speaker roles
+
+&nbsp;
 
 ### 📌 Example Snapshots
 ![Example 1](https://github.com/user-attachments/assets/d287645b-02be-4ace-a46f-dc9b76c43db4)
