@@ -57,9 +57,18 @@ https://github.com/user-attachments/assets/41426f46-2ccb-4ec9-b696-af5a844fcd29
 > ```python
 > MONGODB_URI = "your_mongodb_connection_string"
 > ```  
-> **5. Run the Project**  
+> **5. Get Your API Key**  
+> Visit [Financial Modeling Prep](https://site.financialmodelingprep.com/developer/docs/) and obtain an API key.  
+> Add your key to the relevant part of the script.
+> **6. Prepare the Database**  
+> - Host a MongoDB instance (locally or via MongoDB Atlas).  
+> - Run the 3 scripts inside the `DatabaseScripts/` folder to:  
+>   1. Create collections  
+>   2. Populate them with API data  
+>   3. Modify and clean the entries
+> **7. Run the Project**  
 > ```bash
-> python earnings_search_dash_app.py
+> python <your_script_name>.py
 > ```
 
 
