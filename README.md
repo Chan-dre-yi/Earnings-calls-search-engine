@@ -66,8 +66,8 @@ https://site.financialmodelingprep.com/
 &nbsp;
 
 ### 🖥️ Console View
-Here’s a glimpse of the backend console showing real-time parsing and search execution:  
-![Console View](https://github.com/user-attachments/assets/48049189-4e41-4cad-8a10-eabb59920341)
+Here’s a glimpse of the backend console showing real-time parsing and search execution: 
+<img src="https://github.com/user-attachments/assets/48049189-4e41-4cad-8a10-eabb59920341" alt="Console View" width="600"/>
 
 &nbsp;
 
@@ -81,6 +81,9 @@ The system relies heavily on MongoDB for:
 &nbsp;
 
 ### 📌 Example Snapshots
-![Example 1](https://github.com/user-attachments/assets/d287645b-02be-4ace-a46f-dc9b76c43db4)
-![Example 2](https://github.com/user-attachments/assets/dce74e43-63e8-49b6-8ae1-2ef688f0c4aa)
-![Example 3](https://github.com/user-attachments/assets/5b73d1d4-d758-481c-ad6a-ed6e81a9aa04)
+<img src="https://github.com/user-attachments/assets/d287645b-02be-4ace-a46f-dc9b76c43db4" alt="Example 1" width="600"/>
+
+<img src="https://github.com/user-attachments/assets/dce74e43-63e8-49b6-8ae1-2ef688f0c4aa" alt="Example 2" width="600"/>
+
+<img src="https://github.com/user-attachments/assets/5b73d1d4-d758-481c-ad6a-ed6e81a9aa04" alt="Example 3" width="600"/>
+
