@@ -33,8 +33,8 @@ https://github.com/user-attachments/assets/41426f46-2ccb-4ec9-b696-af5a844fcd29
 > ### 🚀 Setup Instructions  
 > **1. Clone the Repository**  
 > ```bash
-> git clone <repository-url>
-> cd <repository-folder>
+> git clone https://github.com/Chan-dre-yi/Earnings-calls-search-engine
+> cd Earnings-calls-search-engine
 > ```  
 > **2. Create a Virtual Environment**  
 > ```bash
