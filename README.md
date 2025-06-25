@@ -39,38 +39,32 @@ https://github.com/user-attachments/assets/41426f46-2ccb-4ec9-b696-af5a844fcd29
 
 &nbsp;
 
-### 🚀 Setup Instructions
-
-#### 1. Clone the Repository
-```bash
-git clone <repository-url>
-cd <repository-folder>
-```
-
-#### 2. Create a Virtual Environment (Optional but Recommended)
-```bash
-python -m venv venv
-```
-
-##### Activate the Virtual Environment
-- **On Linux/Mac:**
-    ```bash
-    source venv/bin/activate
-    ```
-- **On Windows:**
-    ```bash
-    venv\Scriptsctivate
-    ```
-
-#### 3. Install Dependencies
-```bash
-pip install -r requirements.txt
-```
-
-####  4. Run the Project
-```bash
-python <your_script_name>.py
-```
+> ### 🚀 Setup Instructions  
+> **1. Clone the Repository**  
+> ```bash
+> git clone <repository-url>
+> cd <repository-folder>
+> ```  
+> **2. Create a Virtual Environment**  
+> ```bash
+> python -m venv venv
+> ```  
+> **Activate it (Linux/Mac):**  
+> ```bash
+> source venv/bin/activate
+> ```  
+> **Activate it (Windows):**  
+> ```bash
+> venv\Scripts\activate
+> ```  
+> **3. Install Dependencies**  
+> ```bash
+> pip install -r requirements.txt
+> ```  
+> **4. Run the Project**  
+> ```bash
+> python <your_script_name>.py
+> ```
 
 &nbsp;
 
