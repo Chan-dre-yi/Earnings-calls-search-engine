@@ -65,7 +65,7 @@ https://github.com/user-attachments/assets/41426f46-2ccb-4ec9-b696-af5a844fcd29
 > api_key = '' #your api key
 > ```
 > **6. Add Proxy Variables (if required)**  
-> If you're behind a firewall or using restricted internet, set your proxy variables in the script like so:
+> If you're behind a firewall or using restricted internet, set your proxy variables in the  `test_db_script.py` script like so:
 > ```python
 > os.environ["HTTP_PROXY"] = "http://your_proxy:port"
 > os.environ["HTTPS_PROXY"] = "http://your_proxy:port"
