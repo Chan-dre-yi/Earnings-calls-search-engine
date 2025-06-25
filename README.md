@@ -52,26 +52,37 @@ https://github.com/user-attachments/assets/41426f46-2ccb-4ec9-b696-af5a844fcd29
 > ```bash
 > pip install -r requirements.txt
 > ```  
-> **4. Configure the Database URI**  
-> Open `db_connection.py` and add your actual connection string.
+> **4. Configure the Database URI**
+> - Host a MongoDB instance (locally or via MongoDB Atlas).  
+> - Open `db_connection.py` and add your actual connection string.
 > ```python
 > MONGODB_URI = "your_mongodb_connection_string"
 > ```  
 > **5. Get Your API Key**  
 > Visit [Financial Modeling Prep](https://site.financialmodelingprep.com/developer/docs/) and obtain an API key.  
-> Add your key to the relevant part of the script.
+> Add your key to the relevant part of the  `test_db_script.py` script.
 > ```python
-> MONGODB_URI = "your_mongodb_connection_string"
-> ``` 
-> **6. Prepare the Database**  
-> - Host a MongoDB instance (locally or via MongoDB Atlas).  
-> - Run the 3 scripts inside the `DatabaseScripts/` folder to:  
->   1. Create collections  
->   2. Populate them with API data  
->   3. Modify and clean the entries
-> **7. Run the Project**  
+> api_key = '' #your api key
+> ```
+> **6. Add Proxy Variables (if required)**  
+> If you're behind a firewall or using restricted internet, set your proxy variables in the script like so:
+> ```python
+> os.environ["HTTP_PROXY"] = "http://your_proxy:port"
+> os.environ["HTTPS_PROXY"] = "http://your_proxy:port"
+> ```
+> **7. Prepare the Database**  
+> - Run the 4 scripts inside the `DatabaseScripts/` folder (modify the collection names as required)  
 > ```bash
-> python <your_script_name>.py
+> cd DatabaseScripts
+> python test_db_script.py
+> python doc_text_segmentation_script.py
+> python test_to_prod_script.py
+> python synonyms_generation.py
+> cd ..
+> ```
+> **8. Run the Project**  
+> ```bash
+> python earnings_search_dash_app.py
 > ```
 
 
