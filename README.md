@@ -53,8 +53,8 @@ https://github.com/user-attachments/assets/41426f46-2ccb-4ec9-b696-af5a844fcd29
 > pip install -r requirements.txt
 > ```  
 > **4. Configure the Database URI**
-> - Host a MongoDB instance (locally or via MongoDB Atlas).  
-> - Open `db_connection.py` and add your actual connection string.
+> Host a MongoDB instance (locally or via MongoDB Atlas).  
+> Open `db_connection.py` and add your actual connection string.
 > ```python
 > MONGODB_URI = "your_mongodb_connection_string"
 > ```  
@@ -71,7 +71,7 @@ https://github.com/user-attachments/assets/41426f46-2ccb-4ec9-b696-af5a844fcd29
 > os.environ["HTTPS_PROXY"] = "http://your_proxy:port"
 > ```
 > **7. Prepare the Database**  
-> - Run the 4 scripts inside the `DatabaseScripts/` folder (modify the collection names as required)  
+> Run the 4 scripts inside the `DatabaseScripts/` folder (modify the collection names as required)  
 > ```bash
 > cd DatabaseScripts
 > python test_db_script.py
