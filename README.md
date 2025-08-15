@@ -116,3 +116,34 @@ The system relies heavily on MongoDB for:
 
 <img src="https://github.com/user-attachments/assets/5b73d1d4-d758-481c-ad6a-ed6e81a9aa04" alt="Example 3" width="600"/>
 
+&nbsp;
+
+### ❓ FAQ
+
+#### ❓ What problem does this solve?  
+*"Market research analysts often rely on **secondary reports (e.g., Statista, consulting PDFs, investor decks)**. These rarely provide **direct quotes** or **speaker context** from earnings calls. Analysts waste hours cross-checking, verifying, and building PPTs.*  
+*This tool makes it **un-imaginably easier** by combining **trusted data sources** with **direct transcripts/quotes**, letting analysts get **ground truth in seconds**, not days."*
+
+
+#### ❓ Why not just use SQL instead of MongoDB?  
+*"Earnings call transcripts are **long, unstructured text** — with speakers, timestamps, sentiment, and topic tags. Modeling this in SQL would mean **complex joins and performance bottlenecks**.*  
+*MongoDB allows **document-based storage**, making it **natural to index and query by speaker, keyword, or section**, with **faster full-text search**. It’s a perfect fit for **unstructured but query-heavy data**."*
+
+
+#### ❓ How is this different from existing sources like SeekingAlpha or Yahoo Finance?  
+*"Platforms like **SeekingAlpha, Motley Fool, Yahoo Finance** provide access to earnings calls — but mostly in **article format or delayed transcripts**, often behind **paywalls**.*  
+*Our tool provides **direct, fast, and structured access**: you can search **who said what, where, and in which quarter** instantly. It’s designed **for analysts’ workflows**, not general investors."*
+
+
+#### ❓ What impact does it bring for analysts?  
+*"Analysts building PPTs for decision-makers usually spend **days compiling trusted figures** and **quotable insights**. This tool enables: 
+a. Instant quote retrieval from executives’ words, b. Cross-quarter comparisons without manual digging, c. Faster, more reliable reports with traceable sources.
+Net impact: **higher trust, less grunt work, faster insights.**"*
+
+#### ❓ How was this project validated?  
+*"The stack and performance choices were **constantly reviewed by ultra-senior mentors (25–30 yrs experience)**. The approach — MongoDB + NLP pipeline — was confirmed as the **right direction for scale and usability**.*  
+*The only reason it wasn’t pushed to production: **team re-org + deprioritization due to layoffs**, not technical infeasibility."*
+
+
+
+
